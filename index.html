@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="A personal website and creative portfolio.">
+	<title>WanderingPixel's Personal Website</title>
+	<style>
+		:root {
+			color-scheme: dark;
+			--background: #000000;
+			--surface: #000000;
+			--text: #ffffff;
+			--muted: #755b80;
+			--accent: #8b7cff;
+			--accent-light: #afdeff;
+            --accent-light-transparent: #89ceffab;
+		}
+
+		* { box-sizing: border-box; }
+
+		body {
+			margin: 0;
+			padding-top: 1rem;
+			min-height: 100vh;
+			font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+			color: var(--text);
+			background: radial-gradient(circle at top right, #5746ad 0, var(--background) 42%);
+			line-height: 1.6;
+		}
+
+		header, main, footer {
+			width: min(1100px, calc(100% - 2rem));
+			margin: 0 auto;
+		}
+
+		header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 1.5rem 5rem;
+			background: #000000;
+			outline: 4px solid rgb(255, 255, 255);
+		}
+
+		.logo { font-weight: 800; font-size: 1.25rem; letter-spacing: .04em; }
+
+		nav a {
+			color: var(--muted);
+			margin-left: 1.25rem;
+			text-decoration: none;
+		}
+
+		nav a:hover, nav a:focus { color: var(--text); }
+
+		.hero { padding: clamp(5rem, 15vw, 10rem) 0 6rem; max-width: 760px; }
+		.eyebrow { color: var(--accent-light); font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+		h1 { font-size: clamp(2.75rem, 8vw, 5.5rem); line-height: 1.05; margin: 1rem 0; }
+		.hero p { color: var(--muted); font-size: 1.2rem; max-width: 600px; }
+
+		.button,
+		.btn,
+		.ss-nav,
+		.page-nav {
+			appearance: none;
+			font: inherit;
+		}
+
+		.button {
+			display: inline-block;
+			margin-top: 1.5rem;
+			margin-right: 1rem;
+			padding: .8rem 1.25rem;
+			color: #ffffff;
+			background: #000000;
+			border: 4px solid rgb(255, 255, 255);
+			border-radius: 0;
+			font-weight: 900;
+			text-decoration: none;
+			cursor: pointer;
+			transition: transform 0.18s ease, color 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+		}
+
+		.button:hover, .button:focus,
+		.btn:hover, .btn:focus,
+		.ss-nav:hover, .ss-nav:focus,
+		.page-nav:hover, .page-nav:focus {
+			animation: scaleUp 0.15s;
+			color: #e1b6ff;
+			border-color: #e1b6ff;
+			box-shadow: 0 0 0 3px rgba(175, 222, 255, 0.25);
+			outline: none;
+			transform:scale(1.1);
+		}
+		section { padding: 2rem 0 5rem; }
+		h2 { font-size: 2rem; }
+
+		.cards { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+		.card { display: flex; align-items: center; gap: 1.5rem; padding: 1.5rem; background: #000000; border: 4px solid #ffffff; border-radius: 0; }
+		.card img {
+			width: 96px;
+			height: 96px;
+			flex-shrink: 0;
+			display: block;
+			object-fit: contain;
+			image-rendering: auto;
+			-webkit-image-rendering: auto;
+		}
+		.card p { color: var(--muted); }
+		footer { padding: 1.5rem 0; color: var(--muted); border-top: 1px solid #2a3147; }
+
+		@media (max-width: 700px) {
+			header { align-items: flex-start; }
+			nav a { display: inline-block; margin: .25rem 0 .25rem 1rem; }
+			.cards { grid-template-columns: 1fr; }
+		}
+
+        @keyframes scaleUp {
+            0%   { transform:scaleY(1)}
+            30%  { transform:scaleY(1.8); transform:scale(1.15); }
+            100% { transform:scaleY(1.25); transform:scaleX(1.25); color: #e1b6ff; outline-color: #e1b6ff;}
+        }
+
+		.page-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: left;
+			margin-bottom: 2rem;
+		}
+
+		.page-nav {
+			background: #000000;
+			color: var(--text);
+			border: 4px solid #ffffff;
+			padding: 0.8rem 1.25rem;
+			font-size: 1.5rem;
+			cursor: pointer;
+			font-weight: 900;
+			transition: transform 0.18s ease, color 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+		}
+
+		.page-title {
+			margin: 0;
+			flex: 1;
+			text-align: center;
+		}
+
+		.page-content {
+			animation: slideIn 0.5s ease-out;
+		}
+
+		.screenshot-switcher {
+			display: grid;
+			grid-template-columns: auto minmax(0, 1fr) auto;
+			gap: 1rem;
+			align-items: center;
+			padding: 1rem;
+			background: linear-gradient(135deg, rgba(139, 124, 255, 0.18), rgba(0, 0, 0, 0.6));
+			border: 4px solid rgba(255, 255, 255, 0.8);
+			box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+		}
+
+		.ss-nav {
+			width: 3rem;
+			height: 3rem;
+			display: grid;
+			place-items: center;
+			background: #000000;
+			color: var(--text);
+			border: 3px solid #ffffff;
+			font-size: 1.4rem;
+			cursor: pointer;
+			font-weight: 900;
+			transition: transform 0.18s ease, color 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+		}
+
+		.ss-view {
+			position: relative;
+			overflow: hidden;
+			border: 4px solid rgba(255, 255, 255, 0.8);
+			background: #09090d;
+			min-height: 280px;
+		}
+
+		.ss-view img {
+			display: block;
+			width: 100%;
+			height: 100%;
+			min-height: 280px;
+			object-fit: cover;
+			transition: opacity 0.2s ease, transform 0.2s ease;
+		}
+
+		.ss-thumbs {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			align-items: center;
+			gap: 0.75rem;
+			grid-column: 1 / -1;
+			padding-top: 0.5rem;
+			max-width: 100%;
+		}
+
+		.thumb {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			width: 56px;
+			height: 40px;
+			padding: 0;
+			overflow: hidden;
+			background: #000000;
+			border: 2px solid rgba(255, 255, 255, 0.35);
+			cursor: pointer;
+			opacity: 0.7;
+			transition: transform 0.18s ease, opacity 0.18s ease, border-color 0.18s ease;
+		}
+
+		.thumb img {
+			display: block;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+
+		.thumb.active {
+			opacity: 1;
+			border-color: var(--accent-light);
+			box-shadow: 0 0 0 2px rgba(175, 222, 255, 0.35);
+		}
+
+		.thumb:hover, .thumb:focus {
+			transform: translateY(-2px);
+			opacity: 1;
+			outline: none;
+		}
+
+		.mod-switcher {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 0.75rem;
+			margin-bottom: 1.25rem;
+			padding: 0.5rem;
+			background: rgba(10, 10, 18, 0.85);
+			border: 3px solid rgba(255, 255, 255, 0.3);
+			box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+		}
+
+		.mod-tab {
+			appearance: none;
+			border: 3px solid rgba(255, 255, 255, 0.5);
+			background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+			color: var(--text);
+			padding: 0.7rem 1rem;
+			font: inherit;
+			font-weight: 800;
+			letter-spacing: 0.02em;
+			cursor: pointer;
+			transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, color 0.18s ease;
+		}
+
+		.mod-tab:hover,
+		.mod-tab:focus-visible {
+			transform: translateY(-2px);
+			border-color: var(--accent-light);
+			box-shadow: 0 0 0 3px rgba(175, 222, 255, 0.14);
+			outline: none;
+		}
+
+		.mod-tab.active {
+			background: linear-gradient(135deg, rgba(139, 124, 255, 0.35), rgba(175, 222, 255, 0.18));
+			border-color: var(--accent-light);
+			color: #f5f7ff;
+			box-shadow: 0 0 0 2px rgba(175, 222, 255, 0.22), inset 0 0 18px rgba(175, 222, 255, 0.08);
+		}
+
+		.mod-info {
+			margin-top: 1.5rem;
+		}
+
+		.mod-actions {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 0.75rem;
+			margin-top: 1rem;
+		}
+
+		.btn {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			padding: 0.8rem 1.15rem;
+			background: #000000;
+			color: var(--text);
+			border: 4px solid #ffffff;
+			font-weight: 900;
+			text-decoration: none;
+			cursor: pointer;
+			transition: transform 0.18s ease, color 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+		}
+
+		.page-content.slide-out-left {
+			animation: slideOutLeft 0.5s ease-out forwards;
+		}
+
+		.page-content.slide-out-right {
+			animation: slideOutRight 0.5s ease-out forwards;
+		}
+
+		@keyframes slideIn {
+			from { opacity: 0; transform: translateX(50px); }
+			to { opacity: 1; transform: translateX(0); }
+		}
+
+		@keyframes slideOutLeft {
+			from { opacity: 1; transform: translateX(0); }
+			to { opacity: 0; transform: translateX(-50px); }
+		}
+
+		@keyframes slideOutRight {
+			from { opacity: 1; transform: translateX(0); }
+			to { opacity: 0; transform: translateX(50px); }
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<div class="logo">WanderingPix's Personal Site</div>
+		<nav aria-label="Main navigation">
+			<a href="#about">About</a>
+			<a href="#contact">Contact</a>
+		</nav>
+	</header>
+
+	<main>
+		<section class="hero" aria-labelledby="welcome-heading">
+			<div class="eyebrow">Hiya, I'm Pix!</div>
+			<h1>I do silly stuff online!</h1>
+			<p>Welcome to my little website, I do many things, including art, Game modding and Game dev!</p>
+			<a class="button" href="#about">About Me</a>
+			<a class="button" href="#contact">Contact Info</a>
+		</section>
+
+		<section id="about" aria-labelledby="about-heading">
+			<h2 id="about-heading">A little about me</h2>
+			<div class="cards">
+				<article class="card">
+					<h3>What I do</h3>
+					<p>I try to create useful tools and fun gaming experiences.</p>
+				</article>
+				<article class="card">
+					<h3>What I value</h3>
+					<p>Curiosity, communication, continuous learning, and working with others.</p>
+				</article>
+				<article class="card" id="contact-card">
+					<h3>Want to contact me?</h3>
+					<p>Have a question or want to collaborate? feel free to shoot me a message on my <a href="#contact">various social media!</a></p>
+				</article>
+			</div>
+		</section>
+
+		<h2>My Projects:</h1>
+		<section id="pages" aria-labelledby="pages-heading">
+			<header class="page-header">
+				<button id="prevPage" aria-label="Previous page" class="page-nav">◀</button>
+				<h2 id="pages-heading" class="page-title" contenteditable="true" aria-label="Page title">Page 0</h2>
+				<button id="nextPage" aria-label="Next page" class="page-nav">▶</button>
+			</header>
+			<div class="page-views">
+				<div class="page-content active" data-page="0" data-title="Among Us Mods" tabindex="0">
+					<div class="mod-switcher" role="tablist" aria-label="Mod details">
+						<button class="mod-tab active" type="button" role="tab" aria-selected="true" data-mod-title="Stargazer" data-mod-desc="An Among Us Mod which adds many new roles that fit in with the vanilla feel." data-screenshots="screenshots/au-mods/Stargazer/1.png|screenshots/au-mods/Stargazer/2.png|screenshots/au-mods/Stargazer/3.png|screenshots/au-mods/Stargazer/4.png" data-download-pc="https://github.com/WanderingPix/Wilder-Draft/releases/tag/1.0.1" data-download-android="starlight://mods/com.missingpixel.stargazer" data-discord-join="https://discord.gg/HmTmWHtMxh">Stargazer</button>
+						<button class="mod-tab" type="button" role="tab" aria-selected="false" data-mod-title="Emotes Mod" data-mod-desc="An Among Us mod which adds Emotes to the game!" data-screenshots="screenshots/au-mods/EmotesMod/1.png|screenshots/au-mods/EmotesMod/2.png|screenshots/au-mods/EmotesMod/3.png|screenshots/au-mods/EmotesMod/4.png" data-download-pc="https://github.com/Reach-For-Stars-Team/Emotes-Mod/releases/latest" data-download-android="starlight://mods/emotesmod" data-discord-join="https://discord.gg/HmTmWHtMxh">Emotes Mod</button>
+						<button class="mod-tab" type="button" role="tab" aria-selected="false" data-mod-title="Host Utility" data-mod-desc="An Among Us mod that adds many moderation features for game hosts." data-screenshots="screenshots/au-mods/HostUtility/1.png|screenshots/au-mods/HostUtility/2.png|screenshots/au-mods/HostUtility/3.png|screenshots/au-mods/HostUtility/4.png|screenshots/au-mods/HostUtility/5.png" data-download-pc="https://github.com/WanderingPix/Host-Utility/releases/latest" data-download-android="starlight://mods/com.missingpixel.hostutility" data-discord-join="https://discord.gg/HmTmWHtMxh">Host Utility</button>
+						<button class="mod-tab" type="button" role="tab" aria-selected="false" data-mod-title="Colors Of Joy" data-mod-desc="An Among Us mod that allows players to create their own colors, allowing for endless customization." data-screenshots="screenshots/au-mods/ColorsOfJoy/1.png|screenshots/au-mods/ColorsOfJoy/2.png|screenshots/au-mods/ColorsOfJoy/3.png|screenshots/au-mods/ColorsOfJoy/4.png|screenshots/au-mods/ColorsOfJoy/5.png|screenshots/au-mods/ColorsOfJoy/6.png" data-download-pc="https://github.com/WanderingPix/Colors-Of-Joy/releases/latest" data-download-android="starlight://mods/com.missingpixel.colorsofjoy" data-discord-join="https://discord.gg/HmTmWHtMxh">Colors Of Joy</button>
+						<button class="mod-tab" type="button" role="tab" aria-selected="false" data-mod-title="Wilder Draft" data-mod-desc="An Among Us Mod which adds a unique spin to the infamous Draft Mode, includes Role and Modifier drafting." data-screenshots="screenshots/au-mods/WilderDraft/1.png" data-download-pc="https://github.com/WanderingPix/Wilder-Draft/releases/tag/1.0.1" data-download-android="" data-discord-join="https://discord.gg/HmTmWHtMxh">Wilder Draft</button>
+					</div>
+					<div class="screenshot-switcher" id="screenshot-switcher">
+						<button id="ss-prev" class="ss-nav" aria-label="Previous screenshot">◀</button>
+						<div class="ss-view">
+							<img id="ss-image" src="screenshots/screen1.png" alt="Screenshot 1" />
+						</div>
+						<button id="ss-next" class="ss-nav" aria-label="Next screenshot">▶</button>
+						<div class="ss-thumbs" id="ss-thumbs" aria-label="Screenshot thumbnails"></div>
+					</div>
+					<div class="mod-info">
+						<h3 id="mod-title">Stargazer</h3>
+						<p id="mod-desc">An Among Us Mod which adds many new roles that fit in with the vanilla feel.</p>
+						<div class="mod-actions">
+							<button id="download-pc" class="btn" type="button" data-url="https://github.com/Reach-for-stars-team/Stargazer/releases/latest">Download for PC</button>
+							<button id="download-android" class="btn" type="button" data-url="starlight://mods/com.missingpixel.stargazer">Download for Android (Via Starlight)</button>
+							<button id="discord-join" class="btn" type="button" data-url="https://discord.gg/HmTmWHtMxh">Join Discord</button>
+						</div>
+					</div>
+				</div>
+				<div class="page-content" data-page="2" data-title="Deltarune Fangames (Kristal)" tabindex="1">
+					<h3>Coming Soon...</h3>
+				</div>
+			</div>
+		</section>
+
+
+		<section id="contact" aria-labelledby="contact-heading">
+			<h2 id="contact-heading">Contact Information</h2>
+			<div class="cards">
+				<article class="card">
+					<h3>Email</h3>
+					<p><a href="mailto:wanderingpixel0@gmail.com">wanderingpixel0@gmail.com</a></p>
+				</article>
+				<article class="card">
+					<h3>Discord</h3>
+					<p>@wanderingpix</p>
+				</article>
+				<article class="card">
+					<h3>GitHub</h3>
+					<p><a href="https://github.com/wanderingpix" target="_blank" rel="noreferrer">@wanderingpix</a></p>
+				</article>
+			</div>
+		</section>
+
+		<script>
+			(function(){
+				const pages = Array.from(document.querySelectorAll('.page-content'));
+				const title = document.getElementById('pages-heading');
+				let screenshotImage = document.getElementById('ss-image');
+				let thumbs = [];
+				const prevShot = document.getElementById('ss-prev');
+				const nextShot = document.getElementById('ss-next');
+				const thumbStrip = document.getElementById('ss-thumbs');
+				const modTitle = document.getElementById('mod-title');
+				const modDesc = document.getElementById('mod-desc');
+				const modTabs = Array.from(document.querySelectorAll('.mod-tab'));
+				const actionButtons = [
+					document.getElementById('download-pc'),
+					document.getElementById('download-android'),
+					document.getElementById('discord-join')
+				].filter(Boolean);
+				const actionLinks = {
+					'download-pc': 'https://example.com/download-pc',
+					'download-android': 'https://example.com/download-android',
+					'discord-join': 'https://discord.com/invite/example'
+				};
+				let idx = 0;
+				let shotIndex = 0;
+
+				title.dataset.userEdited = title.dataset.userEdited || 'false';
+
+				actionButtons.forEach((button) => {
+					if (actionLinks[button.id]) {
+						button.dataset.url = actionLinks[button.id];
+					}
+				});
+
+				function openActionLink(button) {
+					const url = button?.dataset?.url;
+					if (!url || url === '#') return;
+					window.open(url, '_blank', 'noopener,noreferrer');
+				}
+
+				const actionKeyMap = {
+					'download-pc': 'downloadPc',
+					'download-android': 'downloadAndroid',
+					'discord-join': 'discordJoin'
+				};
+
+				function syncActionButtons(tab) {
+					actionButtons.forEach((button) => {
+						const key = actionKeyMap[button.id];
+						const url = tab?.dataset?.[key] || actionLinks[button.id];
+						button.dataset.url = url || '#';
+					});
+				}
+
+				function syncModGallery(tab) {
+					const screenshots = (tab?.dataset?.screenshots || '').split('|').map((src) => src.trim()).filter(Boolean);
+					const thumbnails = (tab?.dataset?.thumbs || '').split('|').map((src) => src.trim()).filter(Boolean);
+					const alts = (tab?.dataset?.alts || '').split('|').map((src) => src.trim()).filter(Boolean);
+
+					if (!screenshots.length) {
+						thumbs = [];
+						if (thumbStrip) thumbStrip.innerHTML = '';
+						if (screenshotImage) {
+							screenshotImage.src = '';
+							screenshotImage.alt = 'No screenshots available';
+						}
+						return;
+					}
+
+					thumbs = screenshots.map((src, index) => ({
+						dataSrc: src,
+						src: thumbnails[index] || src,
+						alt: alts[index] || `Screenshot ${index + 1}`
+					}));
+
+					if (thumbStrip) {
+						thumbStrip.innerHTML = '';
+						thumbs.forEach((thumb, index) => {
+							const btn = document.createElement('button');
+							btn.type = 'button';
+							btn.className = 'thumb';
+							btn.setAttribute('aria-label', `View screenshot ${index + 1}`);
+							btn.dataset.index = String(index);
+							const img = document.createElement('img');
+							img.src = thumb.src;
+							img.alt = thumb.alt;
+							btn.appendChild(img);
+							btn.addEventListener('click', () => updateShot(index));
+							thumbStrip.appendChild(btn);
+						});
+					}
+
+					updateShot(0);
+				}
+
+				function updateModInfo(tab){
+					if (!tab) return;
+					if (modTitle) modTitle.textContent = tab.dataset.modTitle || 'Mod';
+					if (modDesc) modDesc.textContent = tab.dataset.modDesc || '';
+					modTabs.forEach((item) => {
+						const active = item === tab;
+						item.classList.toggle('active', active);
+						item.setAttribute('aria-selected', String(active));
+					});
+					syncActionButtons(tab);
+					syncModGallery(tab);
+				}
+
+				function show(i){
+					pages.forEach((p, n)=>{
+						const active = n===i;
+						p.classList.toggle('active', active);
+						// hide non-active content from assistive tech and remove from tab order
+						p.hidden = !active;
+						p.setAttribute('aria-hidden', String(!active));
+						if(active){
+							p.tabIndex = 0;
+							p.focus();
+						} else {
+							p.tabIndex = -1;
+						}
+					});
+					const currentPage = pages[i];
+					const activeTab = currentPage.querySelector('.mod-tab.active') || currentPage.querySelector('.mod-tab');
+					if (activeTab) {
+						updateModInfo(activeTab);
+					} else {
+						thumbs = [];
+					}
+					// Only update the header automatically if the user hasn't edited it.
+					if (title.dataset.userEdited !== 'true') {
+						// Use per-page title if provided, otherwise fall back to "Page X"
+						const pageTitle = pages[i].dataset.title;
+						title.textContent = pageTitle ? pageTitle : ('Page ' + (i+1));
+					}
+				}
+
+				function updateShot(n){
+					if (!thumbs.length) return;
+					const total = thumbs.length;
+					shotIndex = (n + total) % total;
+					const current = thumbs[shotIndex];
+					if (screenshotImage && current) {
+						screenshotImage.src = current.src;
+						screenshotImage.alt = current.alt;
+					}
+					if (thumbStrip) {
+						Array.from(thumbStrip.children).forEach((thumb, index) => {
+							thumb.classList.toggle('active', index === shotIndex);
+							thumb.setAttribute('aria-current', index === shotIndex ? 'true' : 'false');
+						});
+					}
+				}
+
+				// Mark the title as user-edited when the user changes it so the script won't overwrite it.
+				title.addEventListener('input', ()=>{
+					title.dataset.userEdited = 'true';
+				});
+
+				title.addEventListener('blur', ()=>{
+					if (!title.textContent.trim()) {
+						title.dataset.userEdited = 'false';
+						title.textContent = 'Page ' + (idx + 1);
+					}
+				});
+
+				document.getElementById('prevPage').addEventListener('click', ()=>{ idx = (idx-1+pages.length)%pages.length; show(idx); });
+				document.getElementById('nextPage').addEventListener('click', ()=>{ idx = (idx+1)%pages.length; show(idx); });
+				prevShot.addEventListener('click', ()=> updateShot(shotIndex - 1));
+				nextShot.addEventListener('click', ()=> updateShot(shotIndex + 1));
+				modTabs.forEach((tab) => tab.addEventListener('click', () => updateModInfo(tab)));
+				actionButtons.forEach((button) => button.addEventListener('click', () => openActionLink(button)));
+				// keyboard support
+				document.addEventListener('keydown', e=>{
+					if(e.key==='ArrowLeft') document.getElementById('prevPage').click();
+					if(e.key==='ArrowRight') document.getElementById('nextPage').click();
+				});
+				show(idx);
+				updateShot(0);
+			})();
+		</script>
+	</main>
+
+	<footer>
+		<small>&copy; 2026 WanderingPixel. All rights reserved.</small>
+	</footer>
+</body>
+</html>
