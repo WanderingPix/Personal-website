@@ -443,6 +443,7 @@
 				};
 				let idx = 0;
 				let shotIndex = 0;
+				let isInitialLoad = true;
 
 				title.dataset.userEdited = title.dataset.userEdited || 'false';
 
@@ -535,7 +536,9 @@
 						p.setAttribute('aria-hidden', String(!active));
 						if(active){
 							p.tabIndex = 0;
-							p.focus();
+							if (!isInitialLoad) {
+								p.focus();
+							}
 						} else {
 							p.tabIndex = -1;
 						}
@@ -596,6 +599,7 @@
 					if(e.key==='ArrowRight') document.getElementById('nextPage').click();
 				});
 				show(idx);
+				isInitialLoad = false;
 				updateShot(0);
 			})();
 		</script>
